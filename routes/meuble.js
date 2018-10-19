@@ -9,6 +9,7 @@ router.use(bodyParser.json());
 router.use(express.urlencoded({ extended: false }));
 
 const Meuble = require('../model/index');
+const simulation = require('../simulation/simulation');
 
 router.get('/all', (req, res, next) => {
     Meuble.findAll()
@@ -133,7 +134,14 @@ router.get('/page/:page', (req,res, next) =>  {
             next: (page * parPage < total)
         });
     });
-})
+});
+
+router.get('/simulation/:nbr', (req, res) => {
+    var nbr = req.params.nbr || 100;
+    simulation(nbr, () => { 
+        res.send("Simulation réussie");
+     });
+});
 
 
 module.exports = router;
