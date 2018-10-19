@@ -37,7 +37,7 @@ router.post('/add', (req, res, next) => {
 });
 
 
-// Read avec id
+// Get avec id
 router.get('/id/:id', (req, res, next) => {
     Meuble.findById(req.params.id)
         .then((meuble) => {
@@ -49,6 +49,7 @@ router.get('/id/:id', (req, res, next) => {
         });
 });
 
+// Get avec ref
 router.get('/ref/:ref', (req, res, next) => {
     Meuble.findAll({
         where: {
@@ -68,14 +69,16 @@ router.get('/ref/:ref', (req, res, next) => {
     });
 });
 
-// Update avec ref
+// Update avec id
 router.post('/update', (req, res, next) => {
-    console.log("req body :", req.body);
-    try{
+
+
+    try {
+
         Meuble.update(
             req.body.data,
         {
-            where: { ref: req.body.ref }
+            where: { id: req.body.id }
         })
         .then(() => {
             res.send("mise à jour réussie");
