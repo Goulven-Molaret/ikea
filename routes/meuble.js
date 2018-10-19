@@ -75,7 +75,6 @@ router.post('/update', (req, res, next) => {
 
 
     try {
-
         Meuble.update(
             req.body.data,
         {
@@ -105,6 +104,7 @@ router.delete('/:id', (req, res, next) => {
 });
 
 
+// Get avec pagination
 router.get('/page/:page', (req,res, next) =>  {
     var page = req.params.page || 1;
     var parPage = 10;
