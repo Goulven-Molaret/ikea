@@ -13,12 +13,16 @@ const Meuble = require('../model/index');
 router.get('/all', (req, res, next) => {
     Meuble.findAll()
         .then((meubles) => {
-            // Nouvelle liste qui contient les données des meubles
-            var meublesArray = [];
-            meubles.forEach((meuble) => {
-                meublesArray.push(meuble.dataValues)
-            })
-            res.json(meublesArray);
+            if (meubles) {
+                // Nouvelle liste qui contient les données des meubles
+                var meublesArray = [];
+                meubles.forEach((meuble) => {
+                    meublesArray.push(meuble.dataValues);
+                })
+                res.json(meublesArray);
+            } else {
+                res.send("Aucun meuble dans la base de donnée");
+            }
         });
 });
 
@@ -43,6 +47,25 @@ router.get('/id/:id', (req, res, next) => {
                 res.status(404).send("Meuble introuvable");
             }
         });
+});
+
+router.get('/ref/:ref', (req, res, next) => {
+    Meuble.findAll({
+        where: {
+            ref: req.params.ref
+        }
+    })
+    .then((meubles) => {
+        if (meubles) {
+            var meublesArray = [];
+            meubles.forEach((meuble) => {
+                meublesArray.push(meuble.dataValues);
+            })
+            res.json(meublesArray);
+        } else {
+            res.status(404).send("Meuble introuvable");
+        }
+    });
 });
 
 // Update avec ref
